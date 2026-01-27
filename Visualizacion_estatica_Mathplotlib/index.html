@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de Visualización con Matplotlib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Merriweather:ital,wght@0,300;0,700;1,300&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e84118;
+            --bg-code: #1e1e1e;
+            --text-main: #333;
+            --bg-light: #f4f7f6;
+        }
+        body { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; color: var(--text-main); line-height: 1.6; background-color: var(--bg-light); }
+        
+        /* Layout Sidebar + Content */
+        .wrapper { display: flex; min-height: 100vh; }
+        
+        .sidebar {
+            width: 250px; background: white; padding: 2rem; border-right: 1px solid #ddd; position: fixed; height: 100%; overflow-y: auto;
+            display: none; /* Oculto en movil por defecto */
+        }
+        @media(min-width: 900px) { .sidebar { display: block; } .main-content { margin-left: 280px; } }
+        
+        .main-content { flex: 1; padding: 2rem 4rem; max-width: 1000px; }
+        
+        /* Typography */
+        h1 { font-family: 'Merriweather', serif; font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        h2 { font-family: 'Merriweather', serif; font-size: 1.8rem; color: var(--primary); border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-top: 3rem; }
+        .intro-text { font-size: 1.1rem; color: #555; margin-bottom: 2rem; }
+        
+        /* Definiciones Pedagógicas */
+        .definition-box {
+            background-color: #fff;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        .definition-box h3 { margin-top: 0; color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .definition-box p { margin: 0; font-style: italic; font-family: 'Merriweather', serif; color: #444; }
+        .cite { display: block; margin-top: 10px; font-size: 0.85rem; color: #7f8c8d; font-style: normal; text-align: right; }
+
+        /* Tarjeta de Ejemplo (Código + Imagen) */
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        
+        .card-header { padding: 1rem 1.5rem; background: #ecf0f1; border-bottom: 1px solid #ddd; font-weight: bold; color: #7f8c8d; font-family: 'Fira Code', monospace; }
+        
+        .card-body { display: flex; flex-wrap: wrap; }
+        
+        .code-section { flex: 1; min-width: 400px; background: var(--bg-code); padding: 0; }
+        .code-section pre { margin: 0; height: 100%; }
+        .code-section code { font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.5; }
+
+        .viz-section { flex: 1; min-width: 400px; padding: 2rem; display: flex; justify-content: center; align-items: center; background-color: white; }
+        .viz-section img { max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #eee; }
+
+        /* Footer */
+        footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid #ccc; font-size: 0.9rem; color: #777; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav class="sidebar">
+        <h3 style="color: var(--primary);">Tipos de Gráficos</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li><a href="#barras" style="text-decoration: none; color: #555; display: block; padding: 8px 0;">1. Barras</a></li>
+            <li><a href="#lineas" style="text-decoration: none; color: #555; display: block; padding: 8px 0;">2. Líneas</a></li>
+            <li><a href="#scatter" style="text-decoration: none; color: #555; display: block; padding: 8px 0;">3. Dispersión</a></li>
+            <li><a href="#histo" style="text-decoration: none; color: #555; display: block; padding: 8px 0;">4. Histograma</a></li>
+            <li><a href="#boxplot" style="text-decoration: none; color: #555; display: block; padding: 8px 0;">5. Boxplot</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1>Catálogo de Visualización de Datos</h1>
+        <p class="intro-text">Guía interactiva para la implementación técnica y el uso correcto de gráficos estadísticos con <strong>Matplotlib</strong>, basada en principios modernos de diseño de información.</p>
+
+        <section id="barras">
+            <h2>1. Gráfico de Barras (Bar Chart)</h2>
+            
+            <div class="definition-box">
+                <h3>Uso Correcto</h3>
+                <p>"Se recomiendan para comparar categorías; funcionan mejor cuando el eje de magnitud es claro y las categorías se ordenan cuando el objetivo es ranking."</p>
+                <span class="cite">Wilke, 2019</span>
+            </div>
+
+            <div class="example-card">
+                <div class="card-header">python implementation</div>
+                <div class="card-body">
+                    <div class="code-section">
+<pre><code class="language-python"># Datos
+categorias = ['A', 'B', 'C', 'D', 'E']
+valores = [45, 82, 35, 95, 60]
+
+# 1. ORDENAR (Clave para rankings)
+df = pd.DataFrame({'cat': categorias, 'val': valores})
+df = df.sort_values('val')
+
+fig, ax = plt.subplots()
+
+# 2. GENERAR (Barras horizontales para leer mejor las etiquetas)
+bars = ax.barh(df['cat'], df['val'], color='#487eb0')
+
+# 3. DESTACAR (Storytelling)
+bars[-1].set_color('#e84118') # El mayor en rojo
+
+ax.set_title("Ventas por Producto (Ranking)")
+ax.spines['bottom'].set_visible(False) # Limpieza
+ax.xaxis.set_ticks([]) # Menos tinta</code></pre>
+                    </div>
+                    <div class="viz-section">
+                        <img src="img_barras.png" alt="Gráfico de Barras Ordenado">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lineas">
+            <h2>2. Gráfico de Líneas (Line Chart)</h2>
+            
+            <div class="definition-box">
+                <h3>Uso Correcto</h3>
+                <p>"Se usan para tendencias, secuencias o series temporales; la lectura se favorece cuando el eje temporal es consistente y el diseño evita saturación."</p>
+            </div>
+
+            <div class="example-card">
+                <div class="card-header">python implementation</div>
+                <div class="card-body">
+                    <div class="code-section">
+<pre><code class="language-python"># Generación de fechas automática
+fechas = pd.date_range('2023-01', periods=12, freq='M')
+
+fig, ax = plt.subplots()
+
+# 1. TRAZADO
+# Estilo diferenciado para contexto vs datos reales
+ax.plot(fechas, tendencia, '--', color='gray', label='Tendencia')
+ax.plot(fechas, reales, '-', color='purple', lw=3, label='Ventas')
+
+# 2. FORMATO DE FECHAS (Evita saturación)
+import matplotlib.dates as mdates
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
+
+ax.set_title("Evolución Mensual")
+ax.legend(frameon=False)</code></pre>
+                    </div>
+                    <div class="viz-section">
+                        <img src="img_lineas.png" alt="Gráfico de Líneas Temporal">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scatter">
+            <h2>3. Dispersión (Scatter Plot)</h2>
+            
+            <div class="definition-box">
+                <h3>Uso Correcto</h3>
+                <p>"Se utiliza para relación entre dos variables y para detectar patrones, agrupamientos u outliers; es especialmente útil en exploración."</p>
+            </div>
+
+            <div class="example-card">
+                <div class="card-header">python implementation</div>
+                <div class="card-body">
+                    <div class="code-section">
+<pre><code class="language-python">fig, ax = plt.subplots()
+
+# 1. DISPERSIÓN
+# 'alpha' ayuda a ver solapamientos (clusters)
+ax.scatter(x, y, alpha=0.6, color='blue')
+
+# 2. ANOTACIÓN DE OUTLIERS
+# Fundamental para análisis exploratorio
+ax.annotate('Outlier', xy=(8, 5), xytext=(5, 10),
+            arrowprops=dict(facecolor='black', arrowstyle='->'))
+
+ax.set_title("Inversión vs Retorno")
+ax.set_xlabel("Inversión")
+ax.set_ylabel("ROI")</code></pre>
+                    </div>
+                    <div class="viz-section">
+                        <img src="img_scatter.png" alt="Gráfico de Dispersión con Outlier">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="histo">
+            <h2>4. Histograma</h2>
+            
+            <div class="definition-box">
+                <h3>Uso Correcto</h3>
+                <p>"Describen la forma de la distribución; su utilidad depende en gran medida de un binning razonable, porque bins excesivos o insuficientes pueden ocultar estructura."</p>
+            </div>
+
+            <div class="example-card">
+                <div class="card-header">python implementation</div>
+                <div class="card-body">
+                    <div class="code-section">
+<pre><code class="language-python">fig, ax = plt.subplots()
+
+# 1. BINNING
+# Usar 'bins' automáticos o definir un número razonable (ej. 25)
+# edgecolor='white' separa visualmente las barras
+ax.hist(datos, bins=25, color='#0097e6', edgecolor='white')
+
+# 2. REFERENCIAS ESTADÍSTICAS
+ax.axvline(np.mean(datos), color='red', ls='--', label='Media')
+
+ax.set_title("Distribución de Datos")
+ax.set_ylabel("Frecuencia")
+ax.legend()</code></pre>
+                    </div>
+                    <div class="viz-section">
+                        <img src="img_histo.png" alt="Histograma de Distribución">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="boxplot">
+            <h2>5. Diagrama de Caja (Boxplot)</h2>
+            
+            <div class="definition-box">
+                <h3>Uso Correcto</h3>
+                <p>"Sintetizan mediana, variabilidad y posibles outliers; son útiles para comparar distribuciones por grupos sin recargar el gráfico."</p>
+                <span class="cite">Few, 2012; Wilke, 2019</span>
+            </div>
+
+            <div class="example-card">
+                <div class="card-header">python implementation</div>
+                <div class="card-body">
+                    <div class="code-section">
+<pre><code class="language-python">data = [grupo1, grupo2, grupo3]
+
+fig, ax = plt.subplots()
+
+# 1. CREACIÓN
+# patch_artist=True permite colorear las cajas
+cajas = ax.boxplot(data, patch_artist=True, 
+                   labels=['G1', 'G2', 'G3'])
+
+# 2. ESTILIZACIÓN DE GRUPOS
+colors = ['#dfe6e9', '#74b9ff', '#a29bfe']
+for patch, color in zip(cajas['boxes'], colors):
+    patch.set_facecolor(color)
+
+ax.set_title("Comparación de Grupos")
+ax.set_ylabel("Valor")</code></pre>
+                    </div>
+                    <div class="viz-section">
+                        <img src="img_boxplot.png" alt="Boxplot Comparativo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Referencias: Few, S. (2012). *Show Me the Numbers*. Wilke, C. (2019). *Fundamentals of Data Visualization*.</p>
+            <p>Generado automáticamente para el curso de Visualización de Datos.</p>
+        </footer>
+
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+</body>
+</html>
