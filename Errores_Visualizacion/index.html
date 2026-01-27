@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de Datos: Nivel Avanzado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/nord.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #f3f4f6;
+            --sidebar-w: 280px;
+            --primary: #2563eb;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --text-main: #1f2937;
+            --card-bg: #ffffff;
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
+        
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-w); background: #111827; color: white; position: fixed; height: 100vh; padding: 2rem; overflow-y: auto;
+        }
+        .sidebar h1 { font-size: 1.2rem; margin-bottom: 2rem; border-bottom: 1px solid #374151; padding-bottom: 1rem; }
+        .nav-link { display: block; padding: 10px 0; color: #9ca3af; text-decoration: none; transition: 0.2s; font-size: 0.95rem; }
+        .nav-link:hover { color: white; transform: translateX(5px); }
+        .nav-link.active { color: var(--primary); font-weight: bold; }
+        
+        /* MAIN CONTENT */
+        .main { margin-left: var(--sidebar-w); flex: 1; padding: 3rem 4rem; max-width: 1200px; }
+        
+        h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 3rem; margin-bottom: 1.5rem; color: #111827; }
+        p { font-size: 1.1rem; line-height: 1.7; color: #4b5563; max-width: 800px; margin-bottom: 2rem; }
+        
+        /* CASE STUDY CARDS */
+        .case-study { background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 4rem; border: 1px solid #e5e7eb; }
+        
+        .cs-header { padding: 1.5rem 2rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; justify-content: space-between; align-items: center; }
+        .tag { font-size: 0.75rem; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; padding: 4px 12px; border-radius: 99px; }
+        .tag-danger { background: #fee2e2; color: var(--danger); }
+        .tag-success { background: #dcfce7; color: var(--success); }
+        
+        .cs-body { padding: 0; }
+        .viz-container { text-align: center; background: #fff; padding: 2rem; border-bottom: 1px solid #eee; }
+        .viz-container img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .exp-col { padding: 2rem; }
+        .exp-bad { background: #fff5f5; border-right: 1px solid #fee2e2; }
+        .exp-good { background: #f0fdf4; }
+        
+        .exp-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 1rem; display: block; text-transform: uppercase; }
+        
+        /* CODE BLOCKS */
+        .code-block { background: #2e3440; padding: 1.5rem; position: relative; }
+        pre { margin: 0; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.5; }
+        .lang-badge { position: absolute; top: 0; right: 0; background: #4c566a; color: white; padding: 5px 10px; font-size: 0.7rem; border-bottom-left-radius: 5px; }
+
+        /* BUTTON */
+        .btn-back { display: inline-block; margin-top: 3rem; padding: 10px 20px; background: #111827; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; }
+        .btn-back:hover { background: #000; }
+
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <h1>MAESTRÍA EN DATOS</h1>
+    <a href="#intro" class="nav-link">Introducción</a>
+    <a href="#spaghetti" class="nav-link">1. Spaghetti Plots</a>
+    <a href="#scales" class="nav-link">2. Escalas Engañosas</a>
+    <a href="#pie" class="nav-link">3. La Falacia del Pie</a>
+    <a href="#small" class="nav-link">4. Small Multiples</a>
+</nav>
+
+<main class="main">
+    
+    <div id="intro">
+        <span class="tag tag-success" style="margin-bottom: 10px; display:inline-block;">Módulo de Introducción</span>
+        <h1 style="font-size: 3.5rem; margin: 0; line-height: 1.1; letter-spacing: -2px;">Ciencia de la Visualización</h1>
+        <p>Bienvenido a la referencia técnica. Aquí abandonamos las configuraciones por defecto. Estudiaremos la ergonomía visual, la carga cognitiva y cómo evitar los errores que destruyen la credibilidad de un científico de datos.</p>
+    </div>
+
+    <section id="spaghetti" class="case-study">
+        <div class="cs-header">
+            <h3>Caso #1: Reduciendo el Ruido Visual</h3>
+            <span class="tag tag-danger">Alta Carga Cognitiva</span>
+        </div>
+        <div class="viz-container">
+            <img src="img_spaghetti.png" alt="Comparativa Spaghetti Plot">
+        </div>
+        <div class="explanation-grid">
+            <div class="exp-col exp-bad">
+                <span class="exp-title" style="color: var(--danger)">El Error</span>
+                <p>Intentar mostrar todo con la misma intensidad. Cuando todo destaca, nada destaca. El cerebro no puede seguir 10 líneas de colores similares cruzándose entre sí.</p>
+            </div>
+            <div class="exp-col exp-good">
+                <span class="exp-title" style="color: var(--success)">La Técnica "Highlighting"</span>
+                <p>Usamos el contexto (líneas grises) para mostrar la variabilidad del mercado, pero usamos un <strong>color de acción</strong> (Azul Fuerte) para contar la historia específica de nuestra empresa.</p>
+            </div>
+        </div>
+        <div class="code-block">
+            <span class="lang-badge">PYTHON</span>
+<pre><code class="language-python"># 1. Dibujar el contexto (Ruido controlado)
+plt.plot(df, color='lightgray', alpha=0.5)
+
+# 2. Dibujar la señal (Datos importantes)
+plt.plot(df['MiEmpresa'], color='#2563eb', linewidth=3)
+
+# 3. Etiquetado directo (Evitar leyendas)
+plt.text(x_final, y_final, "Mi Empresa", color='#2563eb')</code></pre>
+        </div>
+    </section>
+
+    <section id="scales" class="case-study">
+        <div class="cs-header">
+            <h3>Caso #2: Ética y el Eje Y</h3>
+            <span class="tag tag-danger">Manipulación</span>
+        </div>
+        <div class="viz-container">
+            <img src="img_escalas.png" alt="Comparativa Escalas">
+        </div>
+        <div class="explanation-grid">
+            <div class="exp-col exp-bad">
+                <span class="exp-title" style="color: var(--danger)">Eje Truncado</span>
+                <p>Al empezar el eje Y en 97, una diferencia del 1% visualmente parece una diferencia del 200%. Esto es común en noticias sensacionalistas, pero inaceptable en ciencia.</p>
+            </div>
+            <div class="exp-col exp-good">
+                <span class="exp-title" style="color: var(--success)">Principio de Proporcionalidad</span>
+                <p>En gráficos de barras, la longitud codifica el valor. Si cortas la barra, destruyes la codificación visual. <strong>Las barras siempre deben empezar en 0.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pie" class="case-study">
+        <div class="cs-header">
+            <h3>Caso #3: La Ineficiencia del Gráfico de Torta</h3>
+            <span class="tag tag-danger">Baja Precisión</span>
+        </div>
+        <div class="viz-container">
+            <img src="img_pie_vs_bar.png" alt="Pie vs Bar Chart">
+        </div>
+        <div class="content" style="padding: 2rem;">
+            <p><strong>Teoría Perceptiva:</strong> Los humanos somos excelentes comparando longitudes (barras) alineadas en una base común. Somos terribles comparando ángulos y áreas (tortas). Si tienes más de 3 categorías, usa siempre barras.</p>
+        </div>
+    </section>
+
+    <section id="small" class="case-study">
+        <div class="cs-header">
+            <h3>Caso #4: Técnica Profesional "Small Multiples"</h3>
+            <span class="tag tag-success">Recomendado</span>
+        </div>
+        <div class="viz-container">
+            <img src="img_small_multiples.png" alt="Small Multiples Facetting">
+        </div>
+        <div class="content" style="padding: 2rem;">
+            <p>En lugar de superponer todo en un solo eje confuso, divide y vencerás. Crear una cuadrícula de gráficos que comparten ejes permite comparar tendencias sin ruido visual.</p>
+        </div>
+        <div class="code-block">
+            <span class="lang-badge">PYTHON</span>
+<pre><code class="language-python"># El secreto es compartir ejes (sharex, sharey)
+fig, axs = plt.subplots(2, 2, sharex=True, sharey=True)
+
+for ax, datos in zip(axs.flat, lista_datos):
+    ax.plot(datos)
+    # Limpiar ruido en cada subgráfico
+    ax.spines['top'].set_visible(False)</code></pre>
+        </div>
+    </section>
+
+    <a href="../index.html" class="btn-back">← Volver al Temario del Curso</a>
+    <footer style="margin-top: 4rem; color: #9ca3af; font-size: 0.9rem;">
+        Referencia Docente construida con Matplotlib y CSS Grid. Basado en principios de Tufte y Few.
+    </footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+</body>
+</html>
