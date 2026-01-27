@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 4: Seaborn Avanzado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    
+    <style>
+        :root {
+            --primary: #4f46e5; /* Indigo */
+            --primary-light: #e0e7ff;
+            --secondary: #0ea5e9; /* Sky */
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-code: #0f172a;
+            --border: #cbd5e1;
+        }
+        
+        body { font-family: 'Inter', sans-serif; color: var(--text-main); line-height: 1.7; margin: 0; background-color: #f8fafc; }
+        
+        /* Layout */
+        .wrapper { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { background: white; border-right: 1px solid var(--border); position: fixed; width: 260px; height: 100vh; padding: 2rem; box-sizing: border-box; overflow-y: auto; }
+        .sidebar h1 { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 2rem; letter-spacing: -0.5px; }
+        .nav-item { display: block; padding: 10px 0; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        .nav-item:hover { color: var(--primary); transform: translateX(5px); transition: 0.2s; }
+        
+        /* Content */
+        .content { grid-column: 2; padding: 4rem 10%; max-width: 1200px; }
+        
+        h2 { font-size: 2.2rem; letter-spacing: -1px; margin-top: 4rem; margin-bottom: 1.5rem; color: #0f172a; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; }
+        h3 { font-size: 1.4rem; margin-top: 2rem; color: #334155; }
+        p { margin-bottom: 1.5rem; font-size: 1.1rem; color: #334155; }
+        
+        /* Visual Cards */
+        .viz-card { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 3rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .viz-header { padding: 1rem 1.5rem; background: #f1f5f9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .viz-tag { background: var(--primary); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .viz-body { padding: 0; }
+        .viz-body img { width: 100%; display: block; }
+        
+        /* Code Box */
+        .code-container { position: relative; margin: 2rem 0; }
+        .code-label { position: absolute; top: 0; right: 0; background: #334155; color: white; padding: 4px 10px; font-size: 0.75rem; font-family: 'Inter', sans-serif; border-bottom-left-radius: 6px; z-index: 10; }
+        pre { background: var(--bg-code); padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 0; }
+        code { font-family: 'Fira Code', monospace; font-size: 0.9rem; }
+        
+        /* Step-by-Step Lists */
+        .steps { list-style: none; padding: 0; margin: 2rem 0; }
+        .step-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .step-num { flex-shrink: 0; width: 30px; height: 30px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .step-content strong { display: block; color: #0f172a; margin-bottom: 0.2rem; }
+        
+        /* Buttons */
+        .btn-home { display: inline-block; padding: 12px 24px; background: #0f172a; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 3rem; }
+        .btn-home:hover { background: var(--primary); }
+
+        /* Callouts */
+        .callout { background: #fff7ed; border-left: 4px solid #f97316; padding: 1rem; border-radius: 4px; font-size: 0.95rem; color: #9a3412; margin: 1rem 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav class="sidebar">
+        <h1>Seaborn & Stats</h1>
+        <a href="#intro" class="nav-item">Introducción</a>
+        <a href="#distribuciones" class="nav-item">1. Distribuciones Honestas</a>
+        <a href="#correlacion" class="nav-item">2. Heatmaps Limpios</a>
+        <a href="#faceting" class="nav-item">3. Faceting (Grillas)</a>
+        <a href="#workflow" class="nav-item">4. El Flujo Híbrido</a>
+    </nav>
+
+    <main class="content">
+        
+        <div id="intro">
+            <span style="color: var(--primary); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem;">Módulo 4</span>
+            <h1 style="margin-top: 0.5rem; font-size: 3rem; line-height: 1.1;">Visualización Estadística Avanzada</h1>
+            <p>Seaborn no es solo una librería de gráficos "bonitos". Es una interfaz de alto nivel para dibujar modelos estadísticos. En este módulo aprenderás a revelar patrones ocultos (bimodalidad) y a combinar la velocidad de Seaborn con la precisión de Matplotlib.</p>
+        </div>
+
+        <section id="distribuciones">
+            <h2>1. Más allá del Boxplot: Honestidad Estadística</h2>
+            <p>El Boxplot es útil, pero peligroso. Como advierten Rosso & Held (2023), puede ocultar la estructura subyacente de los datos.</p>
+            
+            <div class="viz-card">
+                <div class="viz-header">
+                    <span>Comparativa: Resumen vs. Realidad</span>
+                    <span class="viz-tag">Critical Thinking</span>
+                </div>
+                <div class="viz-body">
+                    <img src="img_distribucion_pro.png" alt="Boxplot vs Violinplot">
+                </div>
+            </div>
+
+            <ul class="steps">
+                <li class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <strong>El Problema del Boxplot</strong>
+                        Si miras el "Grupo A" a la izquierda, la caja sugiere una distribución normal centrada. ¡Es mentira!
+                    </div>
+                </li>
+                <li class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <strong>La Solución del Violinplot</strong>
+                        A la derecha, la forma de "guitarra" revela que hay dos grupos (bimodal).
+                    </div>
+                </li>
+                <li class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <strong>El Toque Maestro (Strip)</strong>
+                        Agregamos <code>sns.stripplot</code> encima para mostrar los puntos reales. Transparencia total.
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="correlacion">
+            <h2>2. Matrices de Correlación Legibles</h2>
+            <p>Un error clásico en visualización es permitir que las etiquetas se solapen. Usamos técnicas de rotación y layouts restringidos para evitarlo.</p>
+
+            <div class="viz-card">
+                <div class="viz-body">
+                    <img src="img_heatmap_pro.png" alt="Heatmap Profesional">
+                </div>
+            </div>
+
+            <div class="code-container">
+                <div class="code-label">PYTHON</div>
+<pre><code class="language-python"># Truco Pro: Rotación de etiquetas para evitar solapamiento
+plt.xticks(rotation=45, ha='right') # 'ha' alinea el texto al final de la barra
+plt.yticks(rotation=0)
+
+# Máscara para ocultar redundancia (Triángulo superior)
+mask = np.triu(np.ones_like(corr, dtype=bool))
+sns.heatmap(..., mask=mask)</code></pre>
+            </div>
+        </section>
+
+        <section id="faceting">
+            <h2>3. El Poder de Figure-Level: FacetGrid</h2>
+            <p>¿Necesitas separar tus datos por categorías (ej. Fumadores vs No Fumadores)? No uses bucles <code>for</code>. Usa la proyección de variables de Seaborn.</p>
+            
+            <div class="callout">
+                <strong>Concepto Clave:</strong> <code>FacetGrid</code> crea automáticamente una matriz de gráficos basándose en las columnas de tu DataFrame.
+            </div>
+
+            <div class="viz-card">
+                <div class="viz-body">
+                    <img src="img_facet_pro.png" alt="FacetGrid Multiples">
+                </div>
+            </div>
+
+            <div class="code-container">
+                <div class="code-label">CÓDIGO EFICIENTE</div>
+<pre><code class="language-python"># 4 Gráficos complejos en 3 líneas
+# 'col' y 'row' definen las variables de corte
+g = sns.FacetGrid(df, col="time", row="smoker", margin_titles=True)
+
+# Mapeamos un gráfico a cada celda
+g.map_dataframe(sns.scatterplot, x="total", y="propina")</code></pre>
+            </div>
+        </section>
+
+        <section id="workflow">
+            <h2>4. El Flujo Híbrido: La Técnica Definitiva</h2>
+            <p>Aquí es donde te conviertes en experto. Usamos Seaborn para pintar los datos (porque entiende DataFrames y estadística) y Matplotlib para refinar la presentación (porque controla el lienzo).</p>
+            
+            <div class="viz-card">
+                <div class="viz-header">
+                    <span>Anatomía del Gráfico Final</span>
+                    <span class="viz-tag">Best Practice</span>
+                </div>
+                <div class="viz-body">
+                    <img src="img_workflow_pro.png" alt="Workflow Híbrido Explicado">
+                </div>
+            </div>
+
+            <h3 style="margin-top: 0;">Paso a Paso del Código:</h3>
+            <div class="code-container">
+<pre><code class="language-python">fig, ax = plt.subplots(figsize=(10, 6))
+
+# PASO 1: GENERACIÓN (Seaborn)
+# Delegamos el cálculo estadístico y mapeo de colores a Seaborn
+# Le pasamos 'ax' para decirle: "Dibuja en este lienzo que creé"
+sns.scatterplot(data=df, x="total", y="tip", hue="day", ax=ax)
+
+# PASO 2: REFINAMIENTO (Matplotlib)
+# Personalizamos títulos con jerarquía
+ax.set_title("Análisis de Propinas", loc='left', weight='bold', fontsize=16)
+
+# PASO 3: ANOTACIONES (Matplotlib)
+# Destacamos el insight clave manualmente
+ax.annotate('Dato Atípico', xy=(50, 10), xytext=(40, 8), arrowprops=...)
+
+# PASO 4: LIMPIEZA (Seaborn Helper)
+# Quitamos los bordes superior y derecho (Data-Ink Ratio)
+sns.despine(trim=True)</code></pre>
+            </div>
+        </section>
+
+        <a href="../index.html" class="btn-home">← Volver al Temario del Curso</a>
+
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+</body>
+</html>
