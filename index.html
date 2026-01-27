@@ -10,7 +10,7 @@
         header { background: #2c3e50; color: white; padding: 4rem 1rem; text-align: center; }
         h1 { margin: 0; font-size: 2.5rem; }
         .subtitle { opacity: 0.8; margin-top: 10px; font-size: 1.2rem; }
-        .container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .container { max-width: 1000px; margin: 3rem auto; padding: 0 1rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         
         .card { 
@@ -19,28 +19,32 @@
             border-top: 5px solid #bdc3c7; display: flex; flex-direction: column; justify-content: space-between;
         }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .card h2 { margin-top: 0; color: #2c3e50; font-size: 1.5rem; }
-        .card p { color: #666; line-height: 1.6; }
+        .card h2 { margin-top: 0; color: #2c3e50; font-size: 1.4rem; }
+        .card p { color: #666; line-height: 1.6; font-size: 0.95rem; }
         
         .btn { 
             display: inline-block; text-align: center; background: #3498db; color: white; 
             padding: 12px 20px; text-decoration: none; border-radius: 6px; margin-top: 20px; font-weight: bold;
         }
-        .btn:hover { background: #2980b9; }
+        .btn:hover { opacity: 0.9; }
         .disabled { background: #ecf0f1; color: #95a5a6; pointer-events: none; }
         
-        /* ESTILOS POR MÓDULO */
-        /* Módulo 1 (Ahora es el de Errores - Amarillo/Oro) */
+        /* ESTILOS ESPECÍFICOS POR MÓDULO */
+        
+        /* Módulo 1: Errores (Amarillo) */
         .mod1 { border-top-color: #f1c40f; }
-        .mod1-btn { background-color: #f39c12; }
-        .mod1-btn:hover { background-color: #d35400; }
+        .btn-mod1 { background-color: #f39c12; }
         
-        /* Módulo 2 (Ahora es Fundamentos - Rojo) */
+        /* Módulo 2: Fundamentos (Rojo) */
         .mod2 { border-top-color: #e74c3c; }
-        .mod2-btn { background-color: #e74c3c; }
-        .mod2-btn:hover { background-color: #c0392b; }
+        .btn-mod2 { background-color: #e74c3c; }
         
-        .mod3 { border-top-color: #2ecc71; }
+        /* Módulo 3: Anatomía Profunda (Morado/Violeta) */
+        .mod3 { border-top-color: #8e44ad; }
+        .btn-mod3 { background-color: #8e44ad; }
+
+        /* Futuros */
+        .mod-future { border-top-color: #bdc3c7; }
     </style>
 </head>
 <body>
@@ -55,32 +59,40 @@
         
         <div class="card mod1">
             <div>
-                <h2>Módulo 1: Maestría en Estilo</h2>
-                <p>Clínica de visualización: Análisis forense de errores comunes (Ejes truncados, Spaghetti plots) y técnicas avanzadas como Small Multiples.</p>
+                <h2>Módulo 1: Maestría en Estilo (Lo que NO se hace)</h2>
+                <p>Clínica de visualización: Análisis forense de errores comunes (Ejes truncados, Spaghetti plots) y técnicas de corrección visual.</p>
             </div>
-            <a href="Errores_Visualizacion/index.html" class="btn mod1-btn">Entrar a la Masterclass →</a>
+            <a href="Errores_Visualizacion/index.html" class="btn btn-mod1">Entrar a la Clínica →</a>
         </div>
 
         <div class="card mod2">
             <div>
-                <h2>Módulo 2: Fundamentos</h2>
-                <p>La base técnica. Dominando la gramática de gráficos estáticos con Matplotlib. Jerarquía Figure-Axes y tipos de gráficos esenciales.</p>
+                <h2>Módulo 2: Fundamentos Técnicos</h2>
+                <p>La base del código. Dominando la gramática de objetos de Matplotlib: Jerarquía Figure-Axes y tipos de gráficos esenciales.</p>
             </div>
-            <a href="Visualizacion_estatica_Mathplotlib/index.html" class="btn mod2-btn">Ver Fundamentos →</a>
+            <a href="Visualizacion_estatica_Mathplotlib/index.html" class="btn btn-mod2">Ver Fundamentos →</a>
         </div>
 
         <div class="card mod3">
             <div>
-                <h2>Módulo 3: Interactividad Web</h2>
+                <h2>Módulo 3: Anatomía Profunda</h2>
+                <p>Tratado avanzado de estilo: Teoría del color (Luminancia), principios Gestalt en leyendas, micro-tipografía y matriz de exportación.</p>
+            </div>
+            <a href="Modulo_3_Anatomia_Deep/index.html" class="btn btn-mod3">Leer el Tratado →</a>
+        </div>
+
+        <div class="card mod-future">
+            <div>
+                <h2>Módulo 4: Interactividad Web</h2>
                 <p>Llevando los gráficos al navegador con Plotly. Tooltips, zoom y selectores dinámicos para dashboards.</p>
             </div>
             <a href="#" class="btn disabled">Próximamente 🚧</a>
         </div>
+
     </div>
 </div>
 
 </body>
 </html>
-
 
 
