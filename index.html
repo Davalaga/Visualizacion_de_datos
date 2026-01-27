@@ -4,47 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso de Visualización de Datos | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Roboto', sans-serif; background: #f4f7f6; color: #333; margin: 0; padding: 0; }
-        header { background: #2c3e50; color: white; padding: 4rem 1rem; text-align: center; }
-        h1 { margin: 0; font-size: 2.5rem; }
-        .subtitle { opacity: 0.8; margin-top: 10px; font-size: 1.2rem; }
-        .container { max-width: 1000px; margin: 3rem auto; padding: 0 1rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        header { background: #2c3e50; color: white; padding: 4rem 1rem; text-align: center; border-bottom: 5px solid #34495e; }
+        h1 { margin: 0; font-size: 2.5rem; font-weight: 700; }
+        .subtitle { opacity: 0.9; margin-top: 10px; font-size: 1.2rem; font-weight: 300; }
+        
+        .container { max-width: 1100px; margin: 3rem auto; padding: 0 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         
         .card { 
-            background: white; border-radius: 10px; padding: 2rem; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; 
-            border-top: 5px solid #bdc3c7; display: flex; flex-direction: column; justify-content: space-between;
+            background: white; border-radius: 12px; padding: 2rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; 
+            border-top: 6px solid #bdc3c7; display: flex; flex-direction: column; justify-content: space-between;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .card h2 { margin-top: 0; color: #2c3e50; font-size: 1.4rem; }
-        .card p { color: #666; line-height: 1.6; font-size: 0.95rem; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+        
+        .card h2 { margin-top: 0; color: #2c3e50; font-size: 1.4rem; font-weight: 700; }
+        .card p { color: #666; line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem; }
         
         .btn { 
-            display: inline-block; text-align: center; background: #3498db; color: white; 
-            padding: 12px 20px; text-decoration: none; border-radius: 6px; margin-top: 20px; font-weight: bold;
+            display: inline-block; text-align: center; color: white; 
+            padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: opacity 0.2s;
         }
         .btn:hover { opacity: 0.9; }
         .disabled { background: #ecf0f1; color: #95a5a6; pointer-events: none; }
         
-        /* ESTILOS ESPECÍFICOS POR MÓDULO */
+        /* --- COLORES POR MÓDULO --- */
         
-        /* Módulo 1: Errores (Amarillo) */
-        .mod1 { border-top-color: #f1c40f; }
+        /* Módulo 1: Errores (Amarillo/Naranja) */
+        .mod1 { border-top-color: #f39c12; }
         .btn-mod1 { background-color: #f39c12; }
         
         /* Módulo 2: Fundamentos (Rojo) */
         .mod2 { border-top-color: #e74c3c; }
         .btn-mod2 { background-color: #e74c3c; }
         
-        /* Módulo 3: Anatomía Profunda (Morado/Violeta) */
+        /* Módulo 3: Anatomía Profunda (Morado) */
         .mod3 { border-top-color: #8e44ad; }
         .btn-mod3 { background-color: #8e44ad; }
 
-        /* Futuros */
-        .mod-future { border-top-color: #bdc3c7; }
+        /* Módulo 4: Seaborn & Estadística (Indigo/Azul) */
+        .mod4 { border-top-color: #4f46e5; }
+        .btn-mod4 { background-color: #4f46e5; }
+
+        /* Futuro */
+        .mod-future { border-top-color: #95a5a6; }
     </style>
 </head>
 <body>
@@ -60,7 +66,7 @@
         <div class="card mod1">
             <div>
                 <h2>Módulo 1: Maestría en Estilo (Lo que NO se hace)</h2>
-                <p>Clínica de visualización: Análisis forense de errores comunes (Ejes truncados, Spaghetti plots) y técnicas de corrección visual.</p>
+                <p>Clínica de visualización: Análisis forense de errores comunes (Ejes truncados, Spaghetti plots) y sus correcciones profesionales.</p>
             </div>
             <a href="Errores_Visualizacion/index.html" class="btn btn-mod1">Entrar a la Clínica →</a>
         </div>
@@ -76,14 +82,22 @@
         <div class="card mod3">
             <div>
                 <h2>Módulo 3: Anatomía Profunda</h2>
-                <p>Tratado avanzado de estilo: Teoría del color (Luminancia), principios Gestalt en leyendas, micro-tipografía y matriz de exportación.</p>
+                <p>Tratado avanzado de estilo: Teoría del color (Luminancia vs Jet), principios Gestalt en leyendas y micro-tipografía.</p>
             </div>
             <a href="Modulo_3_Anatomia_Deep/index.html" class="btn btn-mod3">Leer el Tratado →</a>
         </div>
 
+        <div class="card mod4">
+            <div>
+                <h2>Módulo 4: Estadística con Seaborn</h2>
+                <p>La alianza perfecta. Honestidad en distribuciones (Violin vs Boxplot), Heatmaps limpios y el "Flujo Híbrido" (Seaborn + Matplotlib).</p>
+            </div>
+            <a href="visualizacion_Seaborn_Master/index.html" class="btn btn-mod4">Dominar Seaborn →</a>
+        </div>
+
         <div class="card mod-future">
             <div>
-                <h2>Módulo 4: Interactividad Web</h2>
+                <h2>Módulo 5: Interactividad Web</h2>
                 <p>Llevando los gráficos al navegador con Plotly. Tooltips, zoom y selectores dinámicos para dashboards.</p>
             </div>
             <a href="#" class="btn disabled">Próximamente 🚧</a>
@@ -92,7 +106,9 @@
     </div>
 </div>
 
+<footer style="text-align: center; margin-top: 4rem; padding: 2rem; color: #7f8c8d; font-size: 0.9rem;">
+    <p>Curso de Visualización de Datos &copy; 2024</p>
+</footer>
+
 </body>
 </html>
-
-
