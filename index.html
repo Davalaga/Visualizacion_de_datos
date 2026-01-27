@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Visualización de Datos | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background: #f4f7f6; color: #333; margin: 0; padding: 0; }
+        header { background: #2c3e50; color: white; padding: 4rem 1rem; text-align: center; }
+        h1 { margin: 0; font-size: 2.5rem; }
+        .subtitle { opacity: 0.8; margin-top: 10px; font-size: 1.2rem; }
+        .container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { 
+            background: white; border-radius: 10px; padding: 2rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; 
+            border-top: 5px solid #bdc3c7; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .card h2 { margin-top: 0; color: #2c3e50; font-size: 1.5rem; }
+        .card p { color: #666; line-height: 1.6; }
+        .btn { 
+            display: inline-block; text-align: center; background: #3498db; color: white; 
+            padding: 12px 20px; text-decoration: none; border-radius: 6px; margin-top: 20px; font-weight: bold;
+        }
+        .btn:hover { background: #2980b9; }
+        .disabled { background: #ecf0f1; color: #95a5a6; pointer-events: none; }
+        
+        /* Colores específicos por módulo */
+        .mod1 { border-top-color: #e74c3c; }
+        .mod1-btn { background-color: #e74c3c; }
+        .mod1-btn:hover { background-color: #c0392b; }
+        
+        .mod2 { border-top-color: #f1c40f; }
+        .mod3 { border-top-color: #2ecc71; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Visualización de Datos</h1>
+    <div class="subtitle">Repositorio Oficial del Curso</div>
+</header>
+
+<div class="container">
+    <div class="grid">
+        <div class="card mod1">
+            <div>
+                <h2>Módulo 1: Fundamentos</h2>
+                <p>Dominando la gramática de gráficos estáticos con Matplotlib. Jerarquía Figure-Axes, tipos de gráficos esenciales y buenas prácticas de diseño.</p>
+            </div>
+            <a href="modulo-1-matplotlib/index.html" class="btn mod1-btn">Ingresar al Módulo →</a>
+        </div>
+
+        <div class="card mod2">
+            <div>
+                <h2>Módulo 2: Seaborn & Estilos</h2>
+                <p>Visualización estadística avanzada. Creación de mapas de calor, pairplots y estilizado profesional para papers académicos.</p>
+            </div>
+            <a href="#" class="btn disabled">Próximamente 🚧</a>
+        </div>
+
+        <div class="card mod3">
+            <div>
+                <h2>Módulo 3: Interactividad Web</h2>
+                <p>Llevando los gráficos al navegador con Plotly. Tooltips, zoom y selectores dinámicos para dashboards.</p>
+            </div>
+            <a href="#" class="btn disabled">Próximamente 🚧</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
