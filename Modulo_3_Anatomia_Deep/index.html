@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anatomía Profunda de la Visualización</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Roboto:wght@300;400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css">
+    <style>
+        :root {
+            --text-primary: #1a1a1a;
+            --text-secondary: #555;
+            --accent: #2980b9;
+            --bg-sidebar: #f4f4f4;
+            --border-color: #ddd;
+        }
+
+        body { margin: 0; font-family: 'Roboto', sans-serif; color: var(--text-primary); line-height: 1.8; display: flex; }
+        
+        /* SIDEBAR (TOC) */
+        .sidebar { width: 300px; height: 100vh; position: fixed; background: var(--bg-sidebar); padding: 2rem; overflow-y: auto; border-right: 1px solid var(--border-color); }
+        .sidebar h1 { font-family: 'Merriweather', serif; font-size: 1.5rem; margin-bottom: 2rem; color: var(--accent); }
+        .toc-link { display: block; padding: 8px 0; color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid #e0e0e0; font-size: 0.95rem; }
+        .toc-link:hover { color: var(--accent); padding-left: 5px; transition: 0.2s; }
+
+        /* MAIN */
+        .content { margin-left: 300px; padding: 4rem 6rem; max-width: 900px; }
+        
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: #2c3e50; }
+        h1 { font-size: 3rem; margin-bottom: 1rem; line-height: 1.2; }
+        h2 { font-size: 2rem; margin-top: 4rem; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        h3 { font-size: 1.4rem; margin-top: 2rem; color: #34495e; }
+        
+        p { font-size: 1.15rem; margin-bottom: 1.5rem; }
+        strong { color: #000; font-weight: 700; }
+        
+        /* DEEP DIVE BOXES */
+        .deep-dive { background: #eef7fc; border-left: 5px solid var(--accent); padding: 2rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+        .deep-dive h4 { margin-top: 0; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+        
+        /* FIGURES */
+        figure { margin: 3rem 0; text-align: center; background: white; padding: 1rem; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        figure img { max-width: 100%; height: auto; }
+        figcaption { font-size: 0.9rem; color: #777; margin-top: 10px; font-style: italic; }
+
+        /* CODE */
+        pre { background: #22272e; padding: 1.5rem; border-radius: 8px; overflow-x: auto; }
+        code { font-family: 'Fira Code', monospace; font-size: 0.9rem; }
+
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 1rem; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background-color: var(--accent); color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .btn-back { display: inline-block; margin-top: 4rem; padding: 10px 20px; background: #333; color: white; text-decoration: none; border-radius: 4px; }
+
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <h1>Anatomía del Estilo</h1>
+    <a href="#intro" class="toc-link">Introducción</a>
+    <a href="#anatomia" class="toc-link">1. Anatomía del Objeto Axes</a>
+    <a href="#tipografia" class="toc-link">2. Micro-Tipografía & Layout</a>
+    <a href="#color" class="toc-link">3. Ciencia del Color</a>
+    <a href="#gestalt" class="toc-link">4. Cognición y Leyendas</a>
+    <a href="#export" class="toc-link">5. Matriz de Exportación</a>
+</nav>
+
+<main class="content">
+
+    <div id="intro">
+        <h1>El Diseño de Información Profunda</h1>
+        <p>Este módulo trasciende la codificación básica. Aquí exploramos la intersección entre la <strong>programación en Matplotlib</strong>, la <strong>fisiología de la visión</strong> y la <strong>psicología cognitiva</strong>. El objetivo no es hacer gráficos "bonitos", sino gráficos que respeten el cerebro del lector.</p>
+    </div>
+
+    <section id="anatomia">
+        <h2>1. Anatomía Forense del Objeto Axes</h2>
+        <p>Para controlar el estilo, primero debes conocer la terminología exacta. Matplotlib es una jerarquía de objetos anidados. Si no sabes qué es un <code>Spine</code>, no podrás limpiarlo.</p>
+        
+        <figure>
+            <img src="img_anatomia.png" alt="Diagrama de anatomía de Matplotlib">
+            <figcaption>Figura 1: Desglose de componentes técnicos en un gráfico simple.</figcaption>
+        </figure>
+
+        <div class="deep-dive">
+            <h4>💡 Concepto Clave: Data-Ink Ratio</h4>
+            <p>Edward Tufte introdujo el concepto de "Ratio Tinta-Datos". Todo lo que no representa datos (bordes, fondos grises, líneas de cuadrícula oscuras) es ruido. Tu misión es maximizar la tinta de datos y minimizar la tinta de estructura.</p>
+            <p><strong>En código:</strong> <code>ax.spines['top'].set_visible(False)</code> es la aplicación directa de esta teoría.</p>
+        </div>
+    </section>
+
+    <section id="tipografia">
+        <h2>2. Micro-Tipografía y el F-Pattern</h2>
+        <p>Los estudios de "Eye-tracking" (seguimiento ocular) demuestran que en occidente leemos en un patrón de "F". Empezamos arriba a la izquierda, escaneamos la derecha, y bajamos.</p>
+        <p>Por eso, <strong>centrar el título es un error ergonómico</strong>. Obliga al ojo a buscar el inicio de la frase en un lugar arbitrario.</p>
+
+        <figure>
+            <img src="img_layout.png" alt="Esquema de jerarquía visual">
+            <figcaption>Figura 2: Distribución óptima de elementos basada en lectura occidental.</figcaption>
+        </figure>
+
+        <h3>La Regla de los Tamaños Relativos</h3>
+        <ul>
+            <li><strong>Título (H1):</strong> 130% - 150% del tamaño base. (ej. 16pt - 20pt)</li>
+            <li><strong>Subtítulo (H2):</strong> 100% - 110% del tamaño base, pero en gris o peso ligero.</li>
+            <li><strong>Axis Labels:</strong> 100% del tamaño base. (ej. 12pt)</li>
+            <li><strong>Ticks/Anotaciones:</strong> 80% - 90% del tamaño base. (ej. 10pt)</li>
+        </ul>
+    </section>
+
+    <section id="color">
+        <h2>3. La Ciencia del Color: Luminancia</h2>
+        <p>El color es traicionero. El mapa de color por defecto en muchos softwares antiguos es "Jet" o "Rainbow". Este mapa no es perceptualmente uniforme: el cambio de azul a verde no se percibe con la misma intensidad que de amarillo a rojo.</p>
+
+        <figure>
+            <img src="img_color_science.png" alt="Análisis de luminancia Jet vs Viridis">
+            <figcaption>Figura 3: Comparación de cómo un daltónico o una impresora B/N ve los datos.</figcaption>
+        </figure>
+
+        <div class="deep-dive">
+            <h4>⚠️ El Peligro del Amarillo</h4>
+            <p>Como ves en la Figura 3, el amarillo tiene una luminancia natural muy alta. En el mapa 'Jet', esto crea "falsos picos" de datos donde no los hay, solo porque el color brilla más. <strong>Usa siempre 'viridis', 'magma', 'plasma' o 'cividis'.</strong></p>
+        </div>
+
+        <pre><code class="language-python"># Maneras correctas de llamar mapas perceptuales
+import matplotlib.cm as cm
+
+# Para datos secuenciales (0 a 100)
+cmap = cm.viridis 
+
+# Para datos divergentes (-100 a +100)
+# Usa 'RdBu_r' (Rojo-Azul reverso) o 'vlag' de Seaborn
+cmap = 'RdBu_r' </code></pre>
+    </section>
+
+    <section id="gestalt">
+        <h2>4. Cognición y Leyendas</h2>
+        <p>El principio Gestalt de <strong>Proximidad</strong> dicta que los objetos que están cerca se perciben como un grupo. Una leyenda en una caja separada rompe este principio, creando el "Efecto de Atención Dividida".</p>
+
+        <figure>
+            <img src="img_gestalt.png" alt="Leyendas vs Etiquetas">
+            <figcaption>Figura 4: Reducción de la carga cognitiva mediante etiquetado directo.</figcaption>
+        </figure>
+
+        <p>Al poner la etiqueta justo al final de la línea, eliminas la necesidad de "memoria de trabajo" (recordar qué color es cuál) y permites un procesamiento instantáneo.</p>
+    </section>
+
+    <section id="export">
+        <h2>5. Matriz de Exportación</h2>
+        <p>Finalmente, el formato de salida depende del medio de consumo. No existe un "mejor formato", existe el formato adecuado.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Caso de Uso</th>
+                    <th>Formato</th>
+                    <th>DPI (Resolución)</th>
+                    <th>Rationale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Web / Pantalla</strong></td>
+                    <td>PNG</td>
+                    <td>100 - 150</td>
+                    <td>Carga rápida, fondo transparente opcional. Rasterizado.</td>
+                </tr>
+                <tr>
+                    <td><strong>Impresión (Papers)</strong></td>
+                    <td>PDF / EPS</td>
+                    <td>N/A (Vectorial)</td>
+                    <td>Zoom infinito. Texto seleccionable. Requerido por journals (IEEE, Nature).</td>
+                </tr>
+                <tr>
+                    <td><strong>Edición Posterior</strong></td>
+                    <td>SVG</td>
+                    <td>N/A (Vectorial)</td>
+                    <td>Se puede abrir en Adobe Illustrator/Inkscape para mover elementos manualmente.</td>
+                </tr>
+                <tr>
+                    <td><strong>Presentación 4K</strong></td>
+                    <td>PNG</td>
+                    <td>300+</td>
+                    <td>Evita el pixelado en pantallas grandes.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <a href="../index.html" class="btn-back">← Volver al Temario Principal</a>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+</body>
+</html>
